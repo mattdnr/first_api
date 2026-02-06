@@ -32,14 +32,13 @@ const User = new Schema({
 });
 
 // Hash le mot de passe quand il est modifié
-User.pre('save', function(next) {
+User.pre('save', async function(next) {
     if (!this.isModified('password')) {
-        return next();
+        return;
     }
 
     this.password = bcrypt.hashSync(this.password, 10);
-    
-    next();
+
 });
 
 module.exports = mongoose.model('User', User);
